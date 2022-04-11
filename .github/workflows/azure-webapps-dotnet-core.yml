@@ -62,5 +62,5 @@ jobs:
         uses: azure/webapps-deploy@v2
         with:
           app-name: ${{ env.AZURE_WEBAPP_NAME }}
-          publish-profile: ${{ secrets.ASP_NET_CORE_WEB_APP2 }}
+          publish-profile: ${{ secrets.ASP_CORE_WEB_01_PUBLISH_PROFIE }}
           package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
