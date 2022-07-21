@@ -1,0 +1,43 @@
+name: Deploy WebJob
+
+on:
+  workflow_dispatch:
+
+  push:
+    branches: [ develop ]
+
+env:
+  WEBJOB_NAME: webjob1
+  AZURE_APP_NAME: Webappdemo05
+  PROJECT_ROOT: path/to/your/Project.Root
+  TEST_PROJECT_ROOT: path/to/your/Project.Root.Tests
+  DOTNET_VERSION: '6.0'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    # Checkout the repo
+    - uses: actions/checkout@v2
+
+    # Setup .NET Core SDK
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: ${{ env.DOTNET_VERSION }}
+    
+    - name: dotnet test
+      run: |
+        dotnet test ${{ env.TEST_PROJECT_ROOT }}
+
+    - name: dotnet publish
+      run: |
+        dotnet publish -c Release -o './publish/App_Data/Jobs/Triggered/${{ env.WEBJOB_NAME }}' ${{ env.PROJECT_ROOT }}
+
+    - name: Deploy to Azure App Service
+      uses: azure/webapps-deploy@v2
+      with: 
+        app-name: ${{ env.AZURE_APP_NAME }}
+        publish-profile: ${{ secrets.ASP_CORE_WEB_01_PUBLISH_PROFIE }}
+        package: './publish'
