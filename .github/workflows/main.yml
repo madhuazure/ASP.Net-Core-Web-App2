@@ -9,8 +9,8 @@ on:
 env:
   WEBJOB_NAME: webjob1
   AZURE_APP_NAME: Webappdemo05
-  PROJECT_ROOT: path/to/your/Project.Root
-  TEST_PROJECT_ROOT: path/to/your/Project.Root.Tests
+  PROJECT_ROOT: 
+  TEST_PROJECT_ROOT: 
   DOTNET_VERSION: '6.0'
 
 jobs:
